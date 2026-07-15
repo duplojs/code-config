@@ -1,0 +1,41 @@
+import { A, C, DPE } from "@duplojs/utils";
+
+export namespace User {
+	export const Id = C.createNewType("UserId", C.Number, C.StrictPositiveInt);
+	export type Id = C.GetNewType<typeof Id>;
+
+	export const Nickname = C.createNewType(
+		"UserNickname",
+		C.String,
+		[
+			C.StringMax(40),
+			C.StringMin(2),
+		],
+	);
+	export type Nickname = C.GetNewType<typeof Nickname>;
+
+	export const Role = C.createNewType("UserRole", DPE.literal(["admin", "client", "manager"]));
+	export type Role = C.GetNewType<typeof Role>;
+
+	export const Entity = C.createEntity("User", ({ array }) => ({
+		id: Id,
+		nickname: Nickname,
+		roles: array(Role, {
+			min: 1,
+			max: 5,
+		}),
+	}));
+	export type Entity = C.GetEntity<typeof Entity>;
+
+	const defaultRole = Role.createOrThrow("client");
+
+	export function create(params: {
+		id: Id;
+		nickname: Nickname;
+	}) {
+		return Entity.new({
+			...params,
+			roles: A.withMaxElements([defaultRole]),
+		});
+	}
+}
