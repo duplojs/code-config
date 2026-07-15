@@ -1,10 +1,6 @@
 {
   "name": "@duplojs/code-config",
   "version": "0.0.0",
-  "author": {
-    "name": "ZeRiix",
-    "url": "https://github.com/ZeRiix"
-  },
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -17,7 +13,7 @@
     "test:tu:bench": "vitest bench",
     "test:tu:watch": "vitest --coverage --watch",
     "test:tu:update": "vitest --coverage --update",
-    "test:types": "tsc -p tsconfig.test.json && npm -w integration run test:types",
+    "test:types": "tsc -p tsconfig.test.json",
     "test:lint": "oxlint --quiet",
     "test:lint:fix": "oxlint --fix --quiet",
     "prepare": "husky"
@@ -45,24 +41,21 @@
 			"import": "./dist/commitlint/index.mjs",
 			"require": "./dist/commitlint/index.cjs"
 		},
-    "./tsconfig.json": "./dist/tsconfig/tsconfig.json"
+    "./tsconfig/base.json": "./tsconfig/base.json",
+    "./tsconfig/build.json": "./tsconfig/build.json"
   },
   "dependencies": {
     "@stylistic/eslint-plugin": "5.10.0",
-    "eslint": "10.7.0"
-  },
-  "peerDependencies": {
-    "oxlint": ">=1.74.0 <2.0.0",
-    "oxlint-tsgolint": ">=0.24.0 <1.0.0",
-    "@commitlint/config-conventional": ">=21.2.0 <22.0.0"
+    "@commitlint/cli": "21.2.1",
+    "@commitlint/config-conventional": "21.2.0",
+    "eslint": "10.7.0",
+    "oxlint": "1.74.0",
+    "oxlint-tsgolint": "0.24.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "21.2.1",
-    "@duplojs/eslint": "0.5.0",
-    "@types/node": "26.1.0",
+    "@types/node": "24.1.0",
     "husky": "9.1.7",
     "rolldown": "1.1.5",
-    "rollup-plugin-copy": "3.5.0",
     "rollup-plugin-node-externals": "9.0.1",
     "unplugin-dts": "1.0.3",
     "@typescript/typescript6": "6.0.2",
@@ -74,7 +67,8 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "tsconfig"
   ],
   "workspaces": [
     "integration",
@@ -88,6 +82,6 @@
     "tsconfig"
   ],
   "engines": {
-    "node": ">=22.18.0"
+    "node": ">=24.18.0"
   }
 }

@@ -1,5 +1,4 @@
 import { defineConfig } from "rolldown";
-import copy from "rollup-plugin-copy";
 import dts from "unplugin-dts/rolldown";
 import nodeExternals from "rollup-plugin-node-externals";
 
@@ -34,22 +33,13 @@ export default defineConfig({
 		moduleSideEffects: false,
 	},
 	plugins: [
-		copy({
-			targets: [
-				{
-					src: "scripts/tsconfig/tsconfig.json",
-					dest: "dist/tsconfig",
-				},
-			],
-		}),
 		dts({
 			tsconfigPath: "tsconfig.build.json",
 			outDirs: "dist",
 			bundleTypes: false,
-			copyDtsFiles: false,
 		}),
 		nodeExternals({
-			packagePath: "./package.json",
+			packagePath: "package.json",
 			deps: true,
 			peerDeps: true,
 			optDeps: true,
